@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Minesweeper :width="20" :height="20" :density="0.15"></Minesweeper>
+    <Minesweeper :width="15" :height="20" :density="0.1333"></Minesweeper>
   </div>
 </template>
 
@@ -18,11 +18,9 @@ export default Vue.extend({
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   margin-top: 60px;
 }
 </style>

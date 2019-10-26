@@ -6,7 +6,8 @@
     </span>
     <span v-else-if="gameFinished">
       <template v-if="isBomb &&!hasFlag">B</template>
-      <template v-if="isBomb && hasFlag">FE</template>
+      <template v-if="isBomb && hasFlag">F</template>
+      <template v-if="!isBomb && hasFlag">FE</template>
     </span>
     <span v-else-if="hasFlag">F</span>
   </div>
@@ -25,7 +26,9 @@ export default Vue.extend({
     squareClass() {
       const squareClass = ['square'];
       squareClass.push(this.open ? 'open' : 'closed');
-      if (this.isBomb && this.open) { squareClass.push('bomb'); }
+      if (this.isBomb && this.open) {
+        squareClass.push('bomb');
+      }
       return squareClass;
     },
 
@@ -49,19 +52,20 @@ export default Vue.extend({
 </script>
 <style scoped>
 .square {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   border: gray 1px solid;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .square.closed {
-  background-color: rgb(161, 161, 161);
-  -webkit-box-shadow: inset 13px 0px 64px 6px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 13px 0px 64px 6px rgba(0, 0, 0, 0.75);
-  box-shadow: inset -1px -1px 1px 3px rgba(0, 0, 0, 0.75);
+  background-color: rgb(220, 220, 220);
+  -webkit-box-shadow: inset -1px -1px 1px 2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset -1px -1px 1px 2px rgba(0, 0, 0, 0.75);
+  box-shadow: inset -1px -1px 1px 2px rgba(0, 0, 0, 0.75);
 }
 
 .square.open {

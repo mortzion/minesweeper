@@ -17,12 +17,19 @@ class Square {
    * @returns {boolean} boolean indicating if a bomb exploded.
    */
   public open(): boolean {
+    if (this.hasFlag()) {
+      return false;
+    }
     this.opened = true;
     return this.hasBomb;
   }
 
   public toggleFlag() {
     this.flagged = !this.flagged;
+  }
+
+  public isEmpty() {
+    return this.neighborBombs === 0 && !this.hasBomb;
   }
 
   public setNeighborBombs(neighborBombs: number) {

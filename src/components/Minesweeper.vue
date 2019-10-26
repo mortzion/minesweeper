@@ -1,14 +1,21 @@
 <template>
-  <div class="field">
-    <div v-for="rowIndex in height" class="row" :key="rowIndex">
-      <Square
-        v-for="columnIndex in width"
-        :key="columnIndex"
-        :square="getSquare(columnIndex-1, rowIndex-1)"
-        :game-finished="gameFinished"
-        @click="openSquare(columnIndex-1, rowIndex-1)"
-        @rightClick="toggleFlag(columnIndex-1, rowIndex-1)"
-      ></Square>
+  <div>
+    <div class="header">
+      <div class="flags-left-counter">
+        <span>{{flagsLeft}}</span>
+      </div>
+    </div>
+    <div class="field">
+      <div v-for="rowIndex in height" class="row" :key="rowIndex">
+        <Square
+          v-for="columnIndex in width"
+          :key="columnIndex"
+          :square="getSquare(columnIndex-1, rowIndex-1)"
+          :game-finished="gameFinished"
+          @click="openSquare(columnIndex-1, rowIndex-1)"
+          @rightClick="toggleFlag(columnIndex-1, rowIndex-1)"
+        ></Square>
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +68,14 @@ export default Vue.extend({
     },
   },
 
+  computed: {
+    flagsLeft() {
+      return (
+        this.minesweeper.getBombsCount() - this.minesweeper.getFlagsCount()
+      );
+    },
+  },
+
   methods: {
     initializeNewGame(
       width: number,
@@ -96,5 +111,26 @@ export default Vue.extend({
 .row {
   display: flex;
   flex-direction: row;
+}
+
+.header {
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.flags-left-counter {
+  border: 3px black solid;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flags-left-counter span {
+  color: red;
+  font-size: 2em;
 }
 </style>

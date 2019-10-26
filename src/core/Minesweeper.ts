@@ -30,8 +30,12 @@ class Minesweeper {
     }
   }
 
-  public getFlagCount() {
+  public getFlagsCount() {
     return this.flagsCount;
+  }
+
+  public getBombsCount() {
+    return this.bombsCount;
   }
 
   public getSquare(x: number, y: number): Square {
@@ -40,9 +44,11 @@ class Minesweeper {
 
   public openSquare(x: number, y: number): boolean {
     if (this.isValidPoint(x, y) && !this.gameFinished && !this.board[x][y].hasFlag()) {
-      this.gameFinished = this.board[x][y].open();
-      if (this.board[x][y].getNeighborBombs() === 0 && !this.board[x][y].isBomb()) {
-        this.openNeighbors(x, y);
+      const square = this.board[x][y];
+      const wasOpen = square.isOpen();
+      this.gameFinished = square.open();
+      if (square.isEmpty()) {
+        this.openNeighborsOfEmpty(x, y);
       }
     }
     return this.gameFinished;
@@ -97,15 +103,15 @@ class Minesweeper {
   }
 
 
-  private openNeighbors(x: number, y: number) {
+  private openNeighborsOfEmpty(x: number, y: number) {
     this.getNeighbors(x, y).forEach(({ square, coordinates }) => {
-      if (square.isOpen()) {
+      if (square.isOpen() || square.hasFlag()) {
         return;
       }
 
       square.open();
-      if (square.getNeighborBombs() === 0) {
-        this.openNeighbors(coordinates.x, coordinates.y);
+      if (square.isEmpty()) {
+        this.openNeighborsOfEmpty(coordinates.x, coordinates.y);
       }
     });
   }
